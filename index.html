@@ -14,48 +14,43 @@
 <script>
 
     function Person (ctx) {
-        /*绘制工具*/
-        this.ctx = ctx || document.querySelector('canvas').getContext('2d');
-        /*图片路径*/
+        this.ctx = ctx || document.querySelector('canvas').getContext('2d');        
         this.src = 'image/03.png';
-        /*画布的大小*/
         this.canvasWidth = this.ctx.canvas.width;
         this.canvasHeight = this.ctx.canvas.height;
-
         /*行走相关参数*/
         this.stepSzie = 10;
-        /* 0 前  1 左  2 右  3 后  和图片的行数包含的图片对应上*/
+        /* 0 前  1 左  2 右  3 后  和图片的行数包含的图片对应*/
         this.direction = 0;
         /*x轴方向的偏移步数*/
         this.stepX = 0;
         /*y轴方向的偏移步数*/
         this.stepY = 0;
-
-        /*初始化方法*/
+        /*初始化*/
         this.init();
     };
 
+    /*添加原型方法*/
     Person.prototype.init = function () {
         var that = this;
-        /*1.加载图片*/
+        /*加载图片*/
         this.loadImage(function (image) {
-            /*图片的大小*/
             that.imageWidth = image.width;
             that.imageHeight = image.height;
             /*人物的大小*/
             that.personWidth = that.imageWidth / 4;
             that.personHeight = that.imageHeight / 4;
-            /*绘制图片的起点*/
+            /*图片起点*/
             that.x0 = that.canvasWidth / 2 - that.personWidth / 2;
             that.y0 = that.canvasHeight / 2 - that.personHeight / 2;
-            /*2.默认绘制在中心位置正面朝外*/
+            /*默认绘制在中心位置正面朝外*/
             that.ctx.drawImage(image,
                 0,0,
                 that.personWidth,that.personHeight,
                 that.x0,that.y0,
                 that.personWidth,that.personHeight);
 
-            /*3.能通过方向键去控制人物行走*/
+            /*控制人物行走*/
             that.index = 0;
             document.onkeydown = function (e) {
                 if(e.keyCode == 40){
@@ -96,8 +91,6 @@
         /*清除画布*/
         this.ctx.clearRect(0,0,this.canvasWidth,this.canvasHeight);
         /*绘图*/
-        /*在精灵图上的定位 x  索引*/
-        /*在精灵图上的定位 y  方向*/
         this.ctx.drawImage(image,
             this.index * this.personWidth,this.direction * this.personHeight,
             this.personWidth,this.personHeight,
